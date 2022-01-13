@@ -2,22 +2,23 @@
 # https://docs.python.org/3/library/codecs.html
 
 # Biblioteca para conseguir usar o prompt no python
+from datetime import datetime
 import subprocess
 
 # Criando arquivo txt
 def verificarTxt(nome):
     try:
-        a = open(nome, "rt")
+        a = open(nome, 'r')
         a.close()
     except:
-        print("Ocorreu um erro!")
+        print("Ocorreu um erro! ao abrir o arquivo")
 
 def criarTxt(nome):
     try:
-        a = open(nome, "wt+")
+        a = open(nome, 'wt+')
         a.close()
     except:
-        print("Ocorreu um erro!")
+        print("Ocorreu um erro! ao abrir o arquivo")
 
 #Comandos
 listar_redes = ["netsh", "wlan", "show", "profiles"]
@@ -48,12 +49,14 @@ for nome in lista_redes:
 # Criacao de um arquivo com a rede e senha
 nome_arquivo = "MinhasRedes.txt"
 
-if not verificarTxt(nome_arquivo):
+if verificarTxt(nome_arquivo):
     criarTxt(nome_arquivo)
+    #print("Arquivo criado!")
 
-with open(nome_arquivo, "wt") as arquivo:
+with open(nome_arquivo, 'a') as arquivo:
     #Pega a quantidade de redes
     cont = len(lista_redes)
+    arquivo.write(f"Informacoes retiradas: {datetime.today().strftime('%d-%m-%Y %H:%M:%S')}\n")
     for i in range(cont):
         arquivo.write(f"Rede: {lista_redes[i]} Senha: {lista_senhas[i]}\n")
 
